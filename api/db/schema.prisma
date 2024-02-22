@@ -9,9 +9,13 @@ generator client {
 }
 
 model Raider {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
+  id       Int            @id @default(autoincrement())
+  name     String         @unique
+  class    Class          @default(Unknown)
+  spec     Specialization @default(Unknown)
+  role     Role           @default(Unknown)
   reserves Int
+  Raids    Raid[]
 }
 
 model Raid {
@@ -19,9 +23,36 @@ model Raid {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   raid      Raids
+  Raiders   Raider[]
 }
 
 enum Raids {
   BFD
   Gnomeregan
+}
+
+enum Class {
+  Warrior
+  Paladin
+  Priest
+  Rogue
+  Warlock
+  Hunter
+  Mage
+  Druid
+  Unknown
+}
+
+enum Specialization {
+  DPS
+  Tank
+  Healer
+  Unknown
+}
+
+enum Role {
+  Officer
+  Raider
+  Trial
+  Unknown
 }
