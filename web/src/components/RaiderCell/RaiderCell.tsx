@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 
 import { Tab } from '@headlessui/react'
-import type { FindRaidersQuery, FindRaidersQueryVariables } from 'types/graphql'
+import type {
+  FindRaidersRaidQuery,
+  FindRaidersRaidQueryVariables,
+} from 'types/graphql'
 
 import { Form, Submit, TextAreaField } from '@redwoodjs/forms'
 import type {
@@ -11,12 +14,13 @@ import type {
 } from '@redwoodjs/web'
 
 import RaiderTable from 'src/components/RaiderTable/RaiderTable'
+import RaidTable from 'src/components/RaidTable/RaidTable'
 
 export const QUERY: TypedDocumentNode<
-  FindRaidersQuery,
-  FindRaidersQueryVariables
+  FindRaidersRaidQuery,
+  FindRaidersRaidQueryVariables
 > = gql`
-  query FindRaidersQuery {
+  query FindRaidersRaidQuery {
     raiders {
       id
       class
@@ -30,6 +34,17 @@ export const QUERY: TypedDocumentNode<
         raid
       }
     }
+    raids {
+      createdAt
+      updatedAt
+      raid
+      id
+      Raiders {
+        id
+        name
+        reserves
+      }
+    }
   }
 `
 
@@ -39,14 +54,21 @@ export const Empty = () => <div>Empty</div>
 
 export const Failure = ({
   error,
-}: CellFailureProps<FindRaidersQueryVariables>) => (
+}: CellFailureProps<FindRaidersRaidQueryVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = ({
   raiders,
-}: CellSuccessProps<FindRaidersQuery, FindRaidersQueryVariables>) => {
-  const [getReserves, setReserves] = useState([])
+  raids,
+}: CellSuccessProps<FindRaidersRaidQuery, FindRaidersRaidQueryVariables>) => {
+  const initialRaiders = raiders.map((raider) => ({
+    name: raider.name,
+    reserves: raider.reserves,
+  }))
+  const [isImportReady, setImportReady] = useState(false)
+  const [getCSV, setCSV] = useState('')
+  const [getReserves, setReserves] = useState(initialRaiders)
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -67,13 +89,38 @@ export const Success = ({
     }
   }
 
+  const onImport = () => {
+    // upload to DB
+    setCSV('')
+    setImportReady(false)
+  }
+
   const onSubmit = (data) => {
     console.log('Form submitted:', data)
-    // show popup with raider names and => changes to reserves
+    // display in table +1
+    setImportReady(true)
+  }
+
+  const onReset = () => {
+    setCSV('')
   }
 
   const onExport = () => {
-    // Print CSV from current raider data
+    setCSV(
+      'Player,Class,ExtraReserves,RollBonus,Item,Count\n' +
+        raiders
+          .flatMap((raider) =>
+            Array.from(
+              { length: raider.reserves },
+              () => raider.name + ',' + raider.class.toUpperCase() + ',0,0,0,1'
+            )
+          )
+          .join('\n')
+    )
+  }
+
+  const handleTextareaChange = (event) => {
+    setCSV(event.target.value)
   }
 
   return (
@@ -84,6 +131,8 @@ export const Success = ({
             name="csv"
             placeholder="CSV String goes here"
             className="border-2 border-gray-200 p-2 h-96"
+            value={getCSV}
+            onChange={handleTextareaChange}
           />
           <div className="flex flex-row justify-between">
             <button
@@ -97,6 +146,13 @@ export const Success = ({
               Import
             </Submit>
           </div>
+          <button
+            className="border-2 border-orange-200 bg-orange-50 rounded-lg w-24 py-2"
+            type="button"
+            onClick={onReset}
+          >
+            Reset
+          </button>
         </Form>
       </div>
       <div className="w-96">
@@ -105,19 +161,19 @@ export const Success = ({
             <Tab
               className={({ selected }) =>
                 classNames(
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'w-full ring-0 outline-none rounded-lg py-2.5 text-sm font-medium leading-5',
                   selected
                     ? 'bg-white text-black shadow'
                     : 'text-gray-500 hover:bg-white/[0.12]'
                 )
               }
             >
-              Raiders
+              Raiders ({raiders.length})
             </Tab>
             <Tab
               className={({ selected }) =>
                 classNames(
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'w-full ring-0 outline-none rounded-lg py-2.5 text-sm font-medium leading-5',
                   selected
                     ? 'bg-white text-black shadow'
                     : 'text-gray-500 hover:bg-white/[0.12]'
@@ -128,11 +184,20 @@ export const Success = ({
             </Tab>
           </Tab.List>
           <Tab.Panels>
-            <Tab.Panel className="h-96 w-full overflow-y-auto overflow-x-hidden">
+            <Tab.Panel className="h-96 w-full">
               <RaiderTable raiders={raiders} />
+              {isImportReady ? (
+                <button
+                  className="border-2 border-blue-200 bg-blue-50 rounded-lg mt-2 w-full py-2"
+                  type="button"
+                  onClick={onImport}
+                >
+                  Save
+                </button>
+              ) : null}
             </Tab.Panel>
             <Tab.Panel>
-              <div>raids</div>
+              <RaidTable raids={raids} />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

@@ -1,4 +1,45 @@
-const RaiderTable = ({ raiders }) => {
+import type { FindRaidQuery, FindRaidQueryVariables } from 'types/graphql'
+
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+  TypedDocumentNode,
+} from '@redwoodjs/web'
+
+export const QUERY: TypedDocumentNode<
+  FindRaidQuery,
+  FindRaidQueryVariables
+> = gql`
+  query FindRaidQuery($id: Int!) {
+    raid: raid(id: $id) {
+      id
+      raid
+      createdAt
+      Raiders {
+        id
+        name
+        class
+        role
+        spec
+      }
+    }
+  }
+`
+
+export const Loading = () => <div>Loading...</div>
+
+export const Empty = () => <div>Empty</div>
+
+export const Failure = ({
+  error,
+}: CellFailureProps<FindRaidQueryVariables>) => (
+  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+)
+
+export const Success = ({
+  raid,
+}: CellSuccessProps<FindRaidQuery, FindRaidQueryVariables>) => {
+  const raiders = raid.Raiders
   return (
     <div className="flow-root">
       <div className="inline-block min-w-full align-middle overflow-y-auto max-h-96">
@@ -10,12 +51,6 @@ const RaiderTable = ({ raiders }) => {
                 className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
               >
                 Name
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Reserves
               </th>
               <th
                 scope="col"
@@ -51,9 +86,6 @@ const RaiderTable = ({ raiders }) => {
                   </div>
                 </td>
                 <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                  <div className="text-gray-900">{raider.reserves}</div>
-                </td>
-                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                   <span
                     className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
                       raider.role === 'Officer'
@@ -76,5 +108,3 @@ const RaiderTable = ({ raiders }) => {
     </div>
   )
 }
-
-export default RaiderTable

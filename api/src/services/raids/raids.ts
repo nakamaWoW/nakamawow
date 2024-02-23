@@ -7,7 +7,11 @@ import type {
 import { db } from 'src/lib/db'
 
 export const raids: QueryResolvers['raids'] = () => {
-  return db.raid.findMany()
+  return db.raid.findMany({
+    orderBy: {
+      createdAt: 'asc',
+    },
+  })
 }
 
 export const raid: QueryResolvers['raid'] = ({ id }) => {
