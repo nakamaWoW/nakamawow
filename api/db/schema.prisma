@@ -26,6 +26,14 @@ model Raid {
   Raiders   Raider[]
 }
 
+model Logs {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+  raiderName     String
+  raiderReserves Int
+}
+
 enum Raids {
   BFD
   Gnomeregan
