@@ -42,7 +42,7 @@ export const Success = ({
   const raiders = raid.Raiders
   return (
     <div className="flow-root">
-      <div className="inline-block min-w-full align-middle overflow-y-auto max-h-96">
+      <div className="inline-block h-full min-w-full overflow-y-auto align-middle">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="sticky top-0 bg-slate-100">
             <tr>
