@@ -9,7 +9,7 @@ const RaiderTable = ({ raiders }) => {
                 <tr>
                   <th
                     scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
                   >
                     Name
                   </th>
@@ -53,7 +53,17 @@ const RaiderTable = ({ raiders }) => {
                       <div className="text-gray-900">{raider.reserves}</div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                      <span
+                        className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
+                          raider.role === 'Officer'
+                            ? 'bg-green-50 text-green-700 ring-green-600/20'
+                            : raider.role === 'Raider'
+                            ? 'bg-red-50 text-red-700 ring-red-600/20'
+                            : raider.role === 'Trial'
+                            ? 'bg-purple-50 text-purple-700 ring-purple-600/20'
+                            : 'bg-gray-50 text-gray-700 ring-gray-600/20'
+                        }`}
+                      >
                         {raider.role}
                       </span>
                     </td>

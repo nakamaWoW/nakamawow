@@ -7,7 +7,16 @@ import type {
 import { db } from 'src/lib/db'
 
 export const raiders: QueryResolvers['raiders'] = () => {
-  return db.raider.findMany()
+  return db.raider.findMany({
+    orderBy: [
+      {
+        reserves: 'desc',
+      },
+      {
+        role: 'asc',
+      },
+    ],
+  })
 }
 
 export const raider: QueryResolvers['raider'] = ({ id }) => {

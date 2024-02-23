@@ -13,7 +13,7 @@ const HomePage = () => {
       <Metadata title="Reserves" description="Website for Nakama WoW guild" />
 
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-80">Input</div>
+        <div className="w-96">Input</div>
         <div className="w-96">
           <Tab.Group>
             <Tab.List className="flex p-5 gap-10 bg-slate-100 mb-2">
@@ -43,7 +43,7 @@ const HomePage = () => {
               </Tab>
             </Tab.List>
             <Tab.Panels>
-              <Tab.Panel>
+              <Tab.Panel className="h-96 w-full overflow-y-auto overflow-x-hidden">
                 <RaiderCell />
               </Tab.Panel>
               <Tab.Panel>
