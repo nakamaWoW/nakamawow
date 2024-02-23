@@ -165,10 +165,6 @@ export const Success = ({
   }
 
   const onSubmit = () => {
-    console.log('getReserves', getReserves)
-    console.log('=====================')
-    console.log('raiders', raiders)
-
     raiders.forEach((raider) => {
       // Find the corresponding reserve in the getReserves array
       const reserve = getReserves.find(
