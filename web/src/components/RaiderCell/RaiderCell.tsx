@@ -99,7 +99,7 @@ export const Success = ({
   }))
 
   const fixedString = 'WOW.Nakama'
-  const pass = 'U2FsdGVkX19aKdGZakmmKYse4HeYmXYzhFrngBpNltg='
+  const pass = 'U2FsdGVkX1+sI8zlqbSnSduGe4BZXha7STKKgiiXQVM='
 
   const [isAllowed, setAllowed] = useState(false)
   const [isImportReady, setImportReady] = useState(false)
