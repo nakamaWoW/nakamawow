@@ -228,7 +228,7 @@ export const Success = ({
             <TextAreaField
               name="csv"
               placeholder="CSV String goes here"
-              className="h-96 border-2 border-gray-200 p-2"
+              className="h-96 border-2 border-gray-200 bg-gray-600 p-2 text-white"
               value={getCSV}
               onChange={handleTextareaChange}
             />
@@ -265,7 +265,7 @@ export const Success = ({
           </Form>
         ) : (
           <>
-            <p>Officer Access:</p>
+            <p className="mb-5 text-white">Officer Access:</p>
             <input
               type="password"
               className="h-10 w-full rounded-sm border-2 border-black outline-none ring-0"
@@ -276,14 +276,14 @@ export const Success = ({
       </div>
       <div className="w-96">
         <Tab.Group>
-          <Tab.List className="mb-2 flex gap-10 bg-slate-100 p-5">
+          <Tab.List className="mb-2 flex gap-10 bg-slate-500 p-5">
             <Tab
               className={({ selected }) =>
                 classNames(
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5 outline-none ring-0',
                   selected
                     ? 'bg-white text-black shadow'
-                    : 'text-gray-500 hover:bg-white/[0.12]'
+                    : 'text-white hover:bg-white/[0.5]'
                 )
               }
             >
@@ -295,7 +295,7 @@ export const Success = ({
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5 outline-none ring-0',
                   selected
                     ? 'bg-white text-black shadow'
-                    : 'text-gray-500 hover:bg-white/[0.12]'
+                    : 'text-white hover:bg-white/[0.5]'
                 )
               }
             >

@@ -44,7 +44,7 @@ export const Success = ({
     <div className="flow-root">
       <div className="inline-block h-full min-w-full overflow-y-auto align-middle">
         <table className="min-w-full divide-y divide-gray-300">
-          <thead className="sticky top-0 bg-slate-100">
+          <thead className="sticky top-0 bg-slate-600">
             <tr>
               <th
                 scope="col"
@@ -60,7 +60,7 @@ export const Success = ({
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody className="divide-y divide-gray-200 bg-gray-500">
             {raiders.map((raider) => (
               <tr key={raider.id}>
                 <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm">
@@ -81,7 +81,7 @@ export const Success = ({
                           {raider.name}
                         </a>
                       </div>
-                      <div className="mt-1 text-gray-500">{raider.spec}</div>
+                      <div className="mt-1 text-white">{raider.spec}</div>
                     </div>
                   </div>
                 </td>

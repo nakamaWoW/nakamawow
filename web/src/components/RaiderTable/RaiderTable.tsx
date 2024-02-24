@@ -3,29 +3,29 @@ const RaiderTable = ({ raiders, reserves }) => {
     <div className="flow-root">
       <div className="inline-block max-h-96 min-w-full overflow-y-auto align-middle">
         <table className="min-w-full divide-y divide-gray-300">
-          <thead className="sticky top-0 bg-slate-100">
+          <thead className="sticky top-0 bg-slate-500 text-white">
             <tr>
               <th
                 scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold"
               >
                 Name
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                className="px-3 py-3.5 text-left text-sm font-semibold "
               >
                 Reserves
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                className="px-3 py-3.5 text-left text-sm font-semibold "
               >
                 Role
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody className="divide-y divide-gray-200 bg-gray-600">
             {raiders.map((raider) => {
               // Find the corresponding raider in the reserves array
               const reserve = reserves.find(
@@ -50,17 +50,17 @@ const RaiderTable = ({ raiders, reserves }) => {
                         <div className="font-medium text-gray-900">
                           <a
                             href={`https://atlasforge.gg/wow-classic/armory/us/wild-growth/${raider.name}`}
-                            className="text-cyan-300"
+                            className="text-purple-500"
                           >
                             {raider.name}
                           </a>
                         </div>
-                        <div className="mt-1 text-gray-500">{raider.spec}</div>
+                        <div className="mt-1 text-white">{raider.spec}</div>
                       </div>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div className="text-gray-900">
+                    <div className="text-white">
                       {reserve ? (
                         <>
                           {reserve.reserves}
